@@ -1,0 +1,33 @@
+[project]
+name = "tats"
+version = "0.1.0"
+description = "Three-Axis Tool Selection (TATS): schema-aware contextual bandits with the ADAB anomaly penalty"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Zixu Zhao", email = "zixu.zhao@unsw.edu.au" },
+    { name = "Wenjie Zhang" },
+    { name = "Xin Cao" },
+]
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "scikit-learn>=1.4",
+    "matplotlib>=3.8",
+    "bfcl-eval",
+    "sentence-transformers>=2.7",
+    "torch>=2.2",
+    "xgboost>=2.0",
+    "transformers>=4.44",
+    "pandas>=2.0",
+    "pyarrow>=18",
+    "huggingface_hub>=0.24",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["tats"]

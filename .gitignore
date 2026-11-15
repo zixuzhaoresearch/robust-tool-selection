@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+data/
+katana_llm/prompts.json
+results/revision_r1/logs/
+*.egg-info/
