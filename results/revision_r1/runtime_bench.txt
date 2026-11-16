@@ -1,0 +1,21 @@
+Benchmarking on 1053 queries (BFCL live_multiple)
+======================================================================
+TF-IDF feature extractor setup: 5.0 ms
+[1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+
+Dense feature extractor setup (model load + batch encode): 249.8 ms
+
+Selector             Total (s)    Per-step (ms)   TSA     
+Random               0.002        0.002           0.3077  
+DescMatch            0.028        0.026           0.6173  
+ParamMatch           0.018        0.017           0.4872  
+EpsGreedy            0.006        0.006           0.5223  
+UCB                  0.006        0.006           0.4444  
+LinUCB               0.089        0.085           0.7616  
+BilinTS-Cold         0.133        0.126           0.7474  
+Sup-Online           0.376        0.357           0.7702  
+DenseDescMatch       0.009        0.009           0.8689  
+LinUCB-Dense         0.050        0.047           0.8746  
+
+NOTE: Times include both select() and update() per step.
+Dense setup includes model loading + batch encoding of all queries.

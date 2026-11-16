@@ -56,7 +56,8 @@ Table numbers follow the revised manuscript (revision 1).
 | Table 15 (relaxed oracle), Table 17 (registry rollouts), Table A14 (safe-zone bounds), Table A15 (optimizer quality) | `run_verified_l4.py --suite full` | `results/l4_verified/summary.json` plus per-query traces |
 | Table 16 (metadata-realizable attacks: L1, Shadow, L2, L3, L4-R) | `run_rev1_attacks.py {bfcl,metatool}` | `results/revision_r1/attacks_{bfcl,metatool}.json` |
 | Table 18 (registry trust-label noise) | `run_verified_l4.py --suite registry-noise --betas 1 2 5 --trust-fn 0.01 0.05 0.1 --trust-fp 0.05 0.1` | `results/l4_registry_noise/summary.json` |
-| Table 19 right and Table A10 (ADAB design ablation), Table A9 (alternative variants) | `run_novel_selectors.py` | `results/novel_selectors_10seed.json` |
+| Table 19 right and Table A10 (ADAB design ablation), Table A9 (Committee, per-feature gamma, SupOOD), Table A8 (quantile rows) | `run_novel_selectors.py` | `results/lab_iter{2,4,7,10,11}.json` (Mahalanobis variants: `results/novel_selectors_10seed.json`) |
+| Table A6 (logistic TS), Table A9 (TW-LinUCB, CGB), IDF appendix, MetaTool ADAB rows of Tables 4 and 5 | `run_rev3_legacy_checks.py` | `results/revision_r1/legacy_checks.json` |
 | Table 20 (noisy, missing, delayed feedback) | `run_rev1_feedback.py` | `results/revision_r1/feedback.json` |
 | Table 21 (manipulated feedback) | `run_malicious_feedback.py` | `results/malicious_feedback_10seed.json` |
 | Table 22 (parameter-matching variants), Table 23 (penalty as a guard on a fine-tuned retriever and an LLM) | `run_rev2_methods.py {param,guard,guard2,llmguard}` | `results/revision_r1/{param,guard,guard2,llmguard}.json` |
@@ -65,7 +66,7 @@ Table numbers follow the revised manuscript (revision 1).
 | Table A13 (random-distractor construction) | `run_metatool_randneg.py` | `results/metatool_randneg_10seed.json` |
 | Tables A6 and A7 (GLM and non-linear baselines) | `run_nonlinear_experiments.py` | `results/nonlinear_results_10seed.json` |
 | Table A11 (sigma^2 sensitivity) | `run_sigma2_sensitivity.py` | printed table |
-| Runtime appendix | `run_runtime_bench.py` | printed table |
+| Runtime appendix, Table 5 latency of the feature-based selectors | `run_runtime_bench.py` | `results/revision_r1/runtime_bench.txt` |
 
 `make_rev1_tables.py` prints the LaTeX rows of the revision tables from `results/revision_r1/`.
 Every `results/revision_r1/*.json` stores per-scenario outcomes averaged over seeds, which is what the paired bootstrap uses.
@@ -89,7 +90,7 @@ revision of that script that preceded the addition of the `registry-noise` suite
 
 ## License and citation
 
-Released under the MIT License (see `LICENSE`). The same code will be released at https://github.com/zixuzixu/TATS upon publication.
+Released under the MIT License (see `LICENSE`). The official repository is https://github.com/zixuzhaoresearch/robust-tool-selection.
 If you use it, please cite:
 
 > Zhao, Z.; Zhang, W.; Cao, X. Robust Tool Selection Beyond Description Matching. Submitted to *Applied Sciences*, 2026.
