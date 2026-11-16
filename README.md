@@ -60,6 +60,8 @@ Table numbers follow the revised manuscript (revision 1).
 | Table A6 (logistic TS), Table A9 (TW-LinUCB, CGB), IDF appendix, MetaTool ADAB rows of Tables 4 and 5 | `run_rev3_legacy_checks.py` | `results/revision_r1/legacy_checks.json` |
 | Table 20 (noisy, missing, delayed feedback) | `run_rev1_feedback.py` | `results/revision_r1/feedback.json` |
 | Table 21 (manipulated feedback) | `run_malicious_feedback.py` | `results/malicious_feedback_10seed.json` |
+| Table 5 (Gorilla OpenFunctions v2, Hammer2.1-7b through their function-calling formats) | `run_rev4_fc_export.py`, then `katana_llm/fc_remote.py` on a GPU | `results/revision_r1/llm_fc.json` |
+| Table 24 (usage-memory channel), perplexity-filter baseline (Section 4.4), ToolBench API retriever (Table A16) | `run_rev4_memory.py {memory,ppl,toolbench}` | `results/revision_r1/{memory,ppl,toolbench_ir}.json` |
 | Table 22 (parameter-matching variants), Table 23 (penalty as a guard on a fine-tuned retriever and an LLM) | `run_rev2_methods.py {param,guard,guard2,llmguard}` | `results/revision_r1/{param,guard,guard2,llmguard}.json` |
 | Table A4 (RobustLinUCB rows), symmetric label noise | `run_day3_experiments.py` | `results/day3_experiments.json` |
 | Table A12 (MetaTool per-channel ablation) | `run_metatool_channel_ablation.py --Ks 5 10 20 50 --seeds 0 1 2 3 4` | `results/metatool_channel_ablation.json` |

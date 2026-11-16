@@ -5,3 +5,4 @@ data/
 katana_llm/prompts.json
 results/revision_r1/logs/
 *.egg-info/
+katana_llm/fc_scenarios.json
