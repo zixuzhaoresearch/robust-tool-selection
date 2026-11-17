@@ -41,33 +41,33 @@ Table numbers follow the revised manuscript (revision 1).
 
 | Paper element | Script | Output |
 |---|---|---|
-| Table 4 (clean selection, BFCL rows), Table 19 left, Figure 2, Table A3 (repeated interaction) | `run_bilints_experiments.py` | `results/bilints_results.json` |
+| Table 4 (clean selection, BFCL rows), Table 18 left, Figure 2, Table A2 (repeated interaction) | `run_bilints_experiments.py` | `results/bilints_results.json` |
 | Table 4 (MetaTool rows) | `run_metatool_experiments.py` | `results/metatool_results.json` |
 | Table 4 (Sup-Offline / Sup-Online) | `run_supervised_full.py` | `results/supervised_results.json` |
-| Table 4 (TF-IDF-Desc, DenseDescMatch-FT, EmbRerank-Online), Table 3 (feature weights, drop-one), Tables 6 and 7 (candidate-set and pooled-catalog scaling) | `run_rev1_baselines.py {ft,features,scale}` | `results/revision_r1/{ft,features,scale}.json` |
+| Table 4 (TF-IDF-Desc, DenseDescMatch-FT, EmbRerank-Online), Table 3 (feature weights, drop-one), Table 6 and Table A8 (candidate-set and pooled-catalog scaling) | `run_rev1_baselines.py {ft,features,scale}` | `results/revision_r1/{ft,features,scale}.json` |
 | Table 5 (LLM selectors, Qwen2.5-1.5B/3B) | `run_rev1_llm.py` | `results/revision_r1/llm.json` |
 | Table 5 (larger LLM selectors) | `run_rev2_llm_export.py`, then `katana_llm/llm_remote.py` on a GPU node | `results/revision_r1/llm_large.json` |
-| Table 8 (ToolRet, 37k tools) and Table A16 (retrieval baselines) | `run_rev2_toolret.py {toolret,retrievers}`, `run_rev2_retrievers2.py` | `results/revision_r1/{toolret,retrievers,retrievers2}.json` |
-| Tables 9 and 10 (description and schema degradation) | `run_rev1_degradation.py` | `results/revision_r1/degradation.json` |
-| Table 12 (L1 attacks: desc_copy, param_generic, param_steal, full_adaptive) | `run_adversarial_experiments.py` | `results/adversarial_*.json`, `results/adv_*.json` |
-| Table 13 (ADAB gamma frontier, Mahalanobis row) | `run_tab8_sweep.py` | `results/tab8_gamma_sweep_10seed.json` |
-| Table 13 (dense rows), Table 14 (MetaTool injection), Table A4 | `run_adab_dense_adversarial.py`, `run_adab_metatool.py`, `run_adversarial_metatool.py` | `results/adab_dense_adv.json`, `results/adab_ema_metatool.json`, `results/adab_metatool_10seed.json` |
+| Table 7 (ToolRet, 37k tools) and Table A11 (retrieval baselines) | `run_rev2_toolret.py {toolret,retrievers}`, `run_rev2_retrievers2.py` | `results/revision_r1/{toolret,retrievers,retrievers2}.json` |
+| Tables 8 and 9 (description and schema degradation) | `run_rev1_degradation.py` | `results/revision_r1/degradation.json` |
+| Table 11 (L1 attacks: desc_copy, param_generic, param_steal, full_adaptive) | `run_adversarial_experiments.py` | `results/adversarial_*.json`, `results/adv_*.json` |
+| Table 12 (ADAB gamma frontier, Mahalanobis row) | `run_tab8_sweep.py` | `results/tab8_gamma_sweep_10seed.json` |
+| Table 12 (dense rows), Table 13 (MetaTool injection) | `run_adab_dense_adversarial.py`, `run_adab_metatool.py`, `run_adversarial_metatool.py` | `results/adab_dense_adv.json`, `results/adab_ema_metatool.json`, `results/adab_metatool_10seed.json` |
 | Held-out selection of gamma, per-scenario outcomes, paired bootstrap intervals (Sections 4.1 and 4.5) | `run_rev1_stats.py {core_bfcl,core_metatool,holdout,boot}` | `results/revision_r1/{core_bfcl,core_metatool,gamma_holdout,bootstrap}.json` |
-| Table 15 (relaxed oracle), Table 17 (registry rollouts), Table A14 (safe-zone bounds), Table A15 (optimizer quality) | `run_verified_l4.py --suite full` | `results/l4_verified/summary.json` plus per-query traces |
-| Table 16 (metadata-realizable attacks: L1, Shadow, L2, L3, L4-R) | `run_rev1_attacks.py {bfcl,metatool}` | `results/revision_r1/attacks_{bfcl,metatool}.json` |
-| Table 18 (registry trust-label noise) | `run_verified_l4.py --suite registry-noise --betas 1 2 5 --trust-fn 0.01 0.05 0.1 --trust-fp 0.05 0.1` | `results/l4_registry_noise/summary.json` |
-| Table 19 right and Table A10 (ADAB design ablation), Table A9 (Committee, per-feature gamma, SupOOD), Table A8 (quantile rows) | `run_novel_selectors.py` | `results/lab_iter{2,4,7,10,11}.json` (Mahalanobis variants: `results/novel_selectors_10seed.json`) |
-| Table A6 (logistic TS), Table A9 (TW-LinUCB, CGB), IDF appendix, MetaTool ADAB rows of Tables 4 and 5 | `run_rev3_legacy_checks.py` | `results/revision_r1/legacy_checks.json` |
-| Table 20 (noisy, missing, delayed feedback) | `run_rev1_feedback.py` | `results/revision_r1/feedback.json` |
-| Table 21 (manipulated feedback) | `run_malicious_feedback.py` | `results/malicious_feedback_10seed.json` |
-| Table 5 (Gorilla OpenFunctions v2, Hammer2.1-7b through their function-calling formats) | `run_rev4_fc_export.py`, then `katana_llm/fc_remote.py` on a GPU | `results/revision_r1/llm_fc.json` |
-| Table 24 (usage-memory channel), perplexity-filter baseline (Section 4.4), ToolBench API retriever (Table A16) | `run_rev4_memory.py {memory,ppl,toolbench}` | `results/revision_r1/{memory,ppl,toolbench_ir}.json` |
-| Table 22 (parameter-matching variants), Table 23 (penalty as a guard on a fine-tuned retriever and an LLM) | `run_rev2_methods.py {param,guard,guard2,llmguard}` | `results/revision_r1/{param,guard,guard2,llmguard}.json` |
-| Table A4 (RobustLinUCB rows), symmetric label noise | `run_day3_experiments.py` | `results/day3_experiments.json` |
-| Table A12 (MetaTool per-channel ablation) | `run_metatool_channel_ablation.py --Ks 5 10 20 50 --seeds 0 1 2 3 4` | `results/metatool_channel_ablation.json` |
-| Table A13 (random-distractor construction) | `run_metatool_randneg.py` | `results/metatool_randneg_10seed.json` |
-| Tables A6 and A7 (GLM and non-linear baselines) | `run_nonlinear_experiments.py` | `results/nonlinear_results_10seed.json` |
-| Table A11 (sigma^2 sensitivity) | `run_sigma2_sensitivity.py` | printed table |
+| Table 14 (relaxed oracle), Table 16 (registry rollouts), Table A9 (safe-zone bounds), Table A10 (optimizer quality) | `run_verified_l4.py --suite full` | `results/l4_verified/summary.json` plus per-query traces |
+| Table 15 (metadata-realizable attacks: L1, Shadow, L2, L3, L4-R) | `run_rev1_attacks.py {bfcl,metatool}` | `results/revision_r1/attacks_{bfcl,metatool}.json` |
+| Table 17 (registry trust-label noise) | `run_verified_l4.py --suite registry-noise --betas 1 2 5 --trust-fn 0.01 0.05 0.1 --trust-fp 0.05 0.1` | `results/l4_registry_noise/summary.json` |
+| Table 18 right (ADAB design ablation), Table A5 (Committee, per-feature gamma, SupOOD), Appendix F (quantile rows) | `run_novel_selectors.py` | `results/lab_iter{2,4,7,10,11}.json` (Mahalanobis variants: `results/novel_selectors_10seed.json`) |
+| Table A4 (logistic TS), Table A5 (TW-LinUCB, CGB), IDF check in Appendix F, MetaTool ADAB rows of Tables 4 and 5 | `run_rev3_legacy_checks.py` | `results/revision_r1/legacy_checks.json` |
+| Table 19 (noisy, missing, delayed feedback) | `run_rev1_feedback.py` | `results/revision_r1/feedback.json` |
+| Table 20 (manipulated feedback) | `run_malicious_feedback.py` | `results/malicious_feedback_10seed.json` |
+| Table 5 (Gorilla OpenFunctions v2, Hammer2.1-7b through their function-calling formats) | `run_rev4_fc_export.py`, then `katana_llm/fc_remote.py` on a GPU | `results/revision_r1/llm_fc.json` (every raw model output: `llm_fc_raw.jsonl`) |
+| Table 23 (usage-memory channel), perplexity-filter baseline (Section 4.4), ToolBench API retriever (Table A11) | `run_rev4_memory.py {memory,ppl,toolbench}` | `results/revision_r1/{memory,ppl,toolbench_ir}.json` |
+| Table 21 (parameter-matching variants), Table 22 (penalty as a guard on a fine-tuned retriever and an LLM) | `run_rev2_methods.py {param,guard,guard2,llmguard}` | `results/revision_r1/{param,guard,guard2,llmguard}.json` |
+| RobustLinUCB and symmetric label noise (Section 4.6, Appendix C.4) | `run_day3_experiments.py` | `results/day3_experiments.json` |
+| Table A6 (MetaTool per-channel ablation) | `run_metatool_channel_ablation.py --Ks 5 10 20 50 --seeds 0 1 2 3 4` | `results/metatool_channel_ablation.json` |
+| Table A7 (random-distractor construction) | `run_metatool_randneg.py` | `results/metatool_randneg_10seed.json` |
+| Table A4 (non-linear baselines) | `run_nonlinear_experiments.py` | `results/nonlinear_results_10seed.json` |
+| Appendix F (sigma^2 sensitivity) | `run_sigma2_sensitivity.py` | printed table |
 | Runtime appendix, Table 5 latency of the feature-based selectors | `run_runtime_bench.py` | `results/revision_r1/runtime_bench.txt` |
 
 `make_rev1_tables.py` prints the LaTeX rows of the revision tables from `results/revision_r1/`.
