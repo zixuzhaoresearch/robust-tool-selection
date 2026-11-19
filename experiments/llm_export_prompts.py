@@ -1,10 +1,10 @@
-"""Export the LLM-selector prompts of run_rev1_llm.py to one JSON file, so that larger models can be
+"""Export the LLM-selector prompts of llm_selectors.py to one JSON file, so that larger models can be
 scored on a cluster with nothing but torch + transformers (katana_llm/llm_remote.py)."""
 import json
 
-from run_rev1_baselines import metatool_split
-from run_rev1_degradation import degrade_desc
-from run_rev1_llm import SYSTEM, build
+from label_baselines import metatool_split
+from degradation_levels import degrade_desc
+from llm_selectors import SYSTEM, build
 from tats.bfcl_adapter import BFCLToolSelectionBenchmark
 
 bfcl = BFCLToolSelectionBenchmark(bfcl_eval_package=True, dataset="live_multiple").scenarios

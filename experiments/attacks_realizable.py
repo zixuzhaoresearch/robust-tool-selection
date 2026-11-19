@@ -20,7 +20,7 @@ set directly in feature space, and there is no percentile budget.
                            ToolHijacker, with the attacker's shadow queries taken from the
                            warm-up stream.
 
-Protocol as in run_verified_l4.py: 500 benign warm-up queries, the rest attacked, defender
+Protocol as in oracle_registry.py: 500 benign warm-up queries, the rest attacked, defender
 updates online, injected tool always returns reward 0, benign candidates win ties.
 
 Output: results/revision_r1/attacks_{bfcl,metatool}.json

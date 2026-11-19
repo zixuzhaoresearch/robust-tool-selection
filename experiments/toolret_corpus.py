@@ -15,7 +15,7 @@ import time
 
 import numpy as np
 
-from run_rev1_baselines import metatool_split
+from label_baselines import metatool_split
 from tats.adversarial import AdversarialBFCLEnvironment
 from tats.bfcl_adapter import BFCLEnvironment, BFCLToolSelectionBenchmark
 from tats.bfcl_selectors import DescriptionMatchSelector, ParameterMatchSelector

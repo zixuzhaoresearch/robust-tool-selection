@@ -5,8 +5,8 @@ attacks, where the attacker injects a malicious tool with crafted description
 into the candidate set.
 
 Usage:
-  uv run python run_adversarial_experiments.py --mode smoke
-  uv run python run_adversarial_experiments.py --mode full
+  uv run python attacks_l1_bfcl.py --mode smoke
+  uv run python attacks_l1_bfcl.py --mode full
 """
 
 from __future__ import annotations

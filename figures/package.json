@@ -1,0 +1,7 @@
+{
+  "name": "tats-figures",
+  "private": true,
+  "type": "module",
+  "scripts": { "teaser": "node render_teaser.mjs && rsvg-convert -f pdf -o teaser.pdf teaser.svg" },
+  "dependencies": { "esbuild": "0.28.2", "satori": "0.33.4" }
+}

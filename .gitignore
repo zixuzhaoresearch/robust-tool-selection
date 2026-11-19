@@ -6,3 +6,9 @@ katana_llm/prompts.json
 results/revision_r1/logs/
 *.egg-info/
 katana_llm/fc_scenarios.json
+figures/node_modules/
+figures/.teaser.compiled.mjs
+figures/teaser.svg
+figures/teaser.pdf
+adaptation.pdf
+results/revision_r1/ckpt_*.pkl

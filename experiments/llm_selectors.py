@@ -24,8 +24,8 @@ import numpy as np
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from run_rev1_baselines import metatool_split
-from run_rev1_degradation import degrade_desc
+from label_baselines import metatool_split
+from degradation_levels import degrade_desc
 from tats.adversarial import craft_malicious_tool
 from tats.bfcl_adapter import BFCLToolSelectionBenchmark
 from tats.rev1_common import save

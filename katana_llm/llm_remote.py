@@ -1,6 +1,6 @@
 """Standalone LLM tool-selector scoring. Needs only torch + transformers.
 usage: python llm_remote.py prompts.json out.json MODEL [MODEL ...]
-Same protocol as run_rev1_llm.py: chat template, prefilled answer, greedy, <=4 new tokens."""
+Same protocol as llm_selectors.py: chat template, prefilled answer, greedy, <=4 new tokens."""
 import json, re, sys, time
 import numpy as np, torch
 from transformers import AutoModelForCausalLM, AutoTokenizer

@@ -6,8 +6,8 @@ whether our method's gains persist when candidate construction doesn't
 advantage embedding-based baselines.
 
 Usage:
-  uv run python run_metatool_randneg.py --mode smoke   # 1 seed
-  uv run python run_metatool_randneg.py --mode full    # 10 seeds
+  uv run python metatool_random_distractors.py --mode smoke   # 1 seed
+  uv run python metatool_random_distractors.py --mode full    # 10 seeds
 """
 
 from __future__ import annotations

@@ -14,7 +14,7 @@ from collections import Counter
 import numpy as np
 from scipy import stats
 
-from run_rev1_baselines import metatool_split
+from label_baselines import metatool_split
 from tats.adversarial import AdversarialBFCLEnvironment
 from tats.bfcl_adapter import BFCLEnvironment, BFCLToolSelectionBenchmark
 from tats.bilints_selector import ColdStartLinTSSelector, LinUCBSelector, LogisticTSSelector

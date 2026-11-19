@@ -8,7 +8,7 @@ import numpy as np
 import torch
 from sentence_transformers import CrossEncoder, SentenceTransformer
 
-from run_rev1_baselines import metatool_split
+from label_baselines import metatool_split
 from tats.bfcl_adapter import BFCLToolSelectionBenchmark
 from tats.rev1_common import save
 from tats.toolret_adapter import load_queries, load_tools

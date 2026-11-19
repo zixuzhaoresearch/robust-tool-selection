@@ -10,8 +10,8 @@ Against standard LinUCB across three regimes:
   - Cross-benchmark: MetaTool (schema-absent)
 
 Usage:
-  uv run python run_novel_selectors.py --mode smoke
-  uv run python run_novel_selectors.py --mode full
+  uv run python adab_design_ablation.py --mode smoke
+  uv run python adab_design_ablation.py --mode full
 """
 
 from __future__ import annotations

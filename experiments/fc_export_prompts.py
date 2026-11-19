@@ -5,8 +5,8 @@ import re
 
 import numpy as np
 
-from run_rev1_baselines import metatool_split
-from run_rev1_degradation import degrade_desc
+from label_baselines import metatool_split
+from degradation_levels import degrade_desc
 from tats.adversarial import craft_malicious_tool
 from tats.bfcl_adapter import BFCLToolSelectionBenchmark
 

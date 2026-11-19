@@ -8,8 +8,8 @@ import time
 
 import numpy as np
 
-from run_rev1_baselines import metatool_split
-from run_rev4_memory import MemoryExtractor, WithMemory
+from label_baselines import metatool_split
+from usage_memory import MemoryExtractor, WithMemory
 from tats.bilints_selector import LinUCBSelector
 from tats.dense_features import DenseEmbedder, DenseFeatureExtractor
 from tats.features import ToolFeatureExtractor, build_query_texts_from_scenarios

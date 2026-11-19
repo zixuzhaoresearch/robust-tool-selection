@@ -15,8 +15,8 @@ import time
 
 import numpy as np
 
-from run_rev1_baselines import STEmbedder, finetune, metatool_split
-from run_rev1_degradation import degrade_desc, degrade_schema
+from label_baselines import STEmbedder, finetune, metatool_split
+from degradation_levels import degrade_desc, degrade_schema
 from tats.adversarial import AdversarialBFCLEnvironment
 from tats.bfcl_adapter import BFCLEnvironment, BFCLToolSelectionBenchmark
 from tats.bilints_selector import LinUCBSelector
@@ -90,7 +90,7 @@ def part_llmguard(orders, model_name="Qwen/Qwen2.5-3B-Instruct", chunk=32):
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
-    from run_rev1_llm import answer, render
+    from llm_selectors import answer, render
     from tats.adversarial import craft_malicious_tool
 
     scen = BFCLToolSelectionBenchmark(bfcl_eval_package=True, dataset="live_multiple").scenarios

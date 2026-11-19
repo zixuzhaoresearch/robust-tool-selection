@@ -1,8 +1,8 @@
-"""Shared helpers for the Applied Sciences revision-1 experiments (run_rev1_*.py).
+"""Shared helpers for the experiment scripts (rollout, seed summary, paired bootstrap, simple selectors).
 
 Every run records, per scenario, whether the ground-truth tool was selected and
 whether the injected tool was selected, so that paired bootstrap intervals over
-scenarios can be computed afterwards (rev1_bootstrap in run_rev1_stats.py).
+scenarios can be computed afterwards (rev1_bootstrap in stats_bootstrap_gamma.py).
 """
 from __future__ import annotations
 

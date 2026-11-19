@@ -18,8 +18,8 @@ import time
 
 import numpy as np
 
-from run_rev1_baselines import STEmbedder, finetune, metatool_split
-from run_rev1_degradation import degrade_desc
+from label_baselines import STEmbedder, finetune, metatool_split
+from degradation_levels import degrade_desc
 from tats.bfcl_adapter import BFCLTool, BFCLToolSelectionBenchmark
 from tats.bilints_selector import LinUCBSelector, SupervisedOfflineSelector
 from tats.dense_features import DenseEmbedder, DenseFeatureExtractor

@@ -9,8 +9,8 @@ Outcomes:
   - If NeuralUCB ties/loses: evidence that 8-dim linear is sufficient.
 
 Usage:
-  uv run python run_nonlinear_experiments.py --mode smoke  # 1 seed, fast sanity
-  uv run python run_nonlinear_experiments.py --mode full   # 10 seeds, full run
+  uv run python nonlinear_models.py --mode smoke  # 1 seed, fast sanity
+  uv run python nonlinear_models.py --mode full   # 10 seeds, full run
 """
 
 from __future__ import annotations
