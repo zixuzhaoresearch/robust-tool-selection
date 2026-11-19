@@ -9,6 +9,7 @@ At every user turn a shortlister picks k tools from the registry; the agent may 
 
   coverage - no LLM: is every tool of the reference solution in the shortlist? (an ideal agent calls
              exactly the reference tools it is offered)
+  table    - Table 26 from the stored agent results, with paired bootstrap intervals over tasks
   agent    - a local LLM agent calls the shortlisted tools on the real backends, turn by turn; BFCL's
              state/response checker decides task success. The online shortlister learns from execution
              outcomes only (call returned without error / with error / tool offered but not used).
@@ -105,6 +106,24 @@ class Static:
 
     def update(self, q, called, offered):
         pass
+
+
+class Blacklist(Static):
+    """Static ranking with a history-based failure filter: a tool that has returned an error at least
+    `n` times and has never returned without error is removed from the ranking. No learned weights."""
+
+    def __init__(self, reg, which, n=2):
+        super().__init__(reg, which)
+        self.n, self.err, self.ok = n, np.zeros(reg.n), np.zeros(reg.n)
+
+    def shortlist(self, q, k):
+        s = getattr(self.reg, self.which)[self.reg.qid[q]].copy()
+        s[(self.err >= self.n) & (self.ok == 0)] = -np.inf
+        return np.argsort(-s, kind="stable")[:k]
+
+    def update(self, q, called, offered):
+        for t, good in called.items():
+            (self.ok if good else self.err)[t] += 1
 
 
 class Online:
@@ -314,6 +333,8 @@ def agent(model, registry, k, passes, limit, which, seed=0):
     llm = LLM(model)
     conds = {"Oracle servers": "oracle", "TF-IDF": Static(reg, "tfidf"), "Dense": Static(reg, "dense"),
              "LinUCB-Dense + feedback + session": Online(reg, True, True, seed=seed)}
+    if which and "Dense + failure blacklist" in which:
+        conds["Dense + failure blacklist"] = Blacklist(reg, "dense")
     if which and "LinUCB-Dense (text features)" in which:
         conds["LinUCB-Dense (text features)"] = Online(reg, False, False, seed=seed)
     out_path = f"multistep_agent_{registry}_{model.split('/')[-1]}"
@@ -324,7 +345,7 @@ def agent(model, registry, k, passes, limit, which, seed=0):
     for name, sel in conds.items():
         if which and name not in which:
             continue
-        n_pass = passes if isinstance(sel, Online) else 1
+        n_pass = passes if isinstance(sel, (Online, Blacklist)) else 1
         tag = (f"|seed{seed}" if seed else "")
         # checkpoint after every 10 tasks: rows of the current pass and the selector state, so that a run
         # stopped by the walltime continues from the last saved task instead of starting again
@@ -335,14 +356,14 @@ def agent(model, registry, k, passes, limit, which, seed=0):
             print(f"  resuming {name}{tag} at pass {ck['pass']}, task {ck['j']}", flush=True)
 
         def checkpoint(pp, jj, rows, secs):
-            state = {k_: v for k_, v in sel.__dict__.items() if k_ not in ("reg", "_X")} if isinstance(sel, Online) else None
+            state = {k_: v for k_, v in sel.__dict__.items() if k_ not in ("reg", "_X")} if isinstance(sel, (Online, Blacklist)) else None
             tmp = ck_path.with_suffix(".tmp")
             pickle.dump({"pass": pp, "j": jj, "rows": rows, "sel": state, "seconds": secs}, open(tmp, "wb"))
             tmp.replace(ck_path)
 
         for p in range(n_pass):
             key = f"{name}|pass{p}{tag}"
-            if p < ck["pass"] or (key in out["runs"] and ck["pass"] == 0 and ck["j"] == 0 and not isinstance(sel, Online)):
+            if p < ck["pass"] or (key in out["runs"] and ck["pass"] == 0 and ck["j"] == 0 and not isinstance(sel, (Online, Blacklist))):
                 continue
             order = np.random.default_rng(seed * 100 + p).permutation(len(tasks))
             start = ck["j"] if p == ck["pass"] else 0
@@ -380,9 +401,40 @@ def agent(model, registry, k, passes, limit, which, seed=0):
             checkpoint(p + 1, 0, [], 0.0)
             ck = {"pass": p + 1, "j": 0, "rows": [], "sel": None, "seconds": 0.0}
 
+def table():
+    """Table 26: per-agent summary and paired bootstrap intervals over tasks (outcomes averaged over task orders)."""
+    from tats.rev1_common import paired_bootstrap
+    fb, txt = "LinUCB-Dense + feedback + session", "LinUCB-Dense (text features)"
+    for m in ["7B", "14B", "32B"]:
+        path = OUT / f"multistep_agent_full_Qwen2.5-{m}-Instruct.json"
+        if not path.exists():
+            continue
+        d = json.load(open(path))["runs"]
+
+        def vec(k):
+            r = {x["id"]: x for x in d[k]["rows"]}
+            return np.array([float(r[i]["ok"]) for i in sorted(r)])
+        print(f"== Qwen2.5-{m}-Instruct")
+        for k in sorted(d):
+            if not k.startswith(fb):
+                print(f"  {k:44s} offered {d[k]['offered_all']:5.1f}  turns {d[k]['turn_success']:5.1f}  tasks {d[k]['task_success']:5.1f}")
+        for p in (0, 1):
+            ks = [k for k in d if k.startswith(f"{fb}|pass{p}")]
+            if not ks:
+                continue
+            sd = lambda key: float(np.std([d[k][key] for k in ks], ddof=1)) if len(ks) > 1 else 0.0
+            mean = lambda key: float(np.mean([d[k][key] for k in ks]))
+            print(f"  feedback, pass {p + 1}, {len(ks)} task orders: offered {mean('offered_all'):.1f}±{sd('offered_all'):.1f}  "
+                  f"turns {mean('turn_success'):.1f}±{sd('turn_success'):.1f}  tasks {mean('task_success'):.1f}±{sd('task_success'):.1f}")
+            a = np.mean([vec(k) for k in ks], axis=0)
+            for b in ["Dense|pass0", "Oracle servers|pass0", f"{txt}|pass{p}", f"Dense + failure blacklist|pass{p}"]:
+                if b in d:
+                    print(f"      minus {b:36s} {'%+.1f [%.1f, %.1f]' % paired_bootstrap(a, vec(b))}")
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("mode", choices=["coverage", "agent"])
+    ap.add_argument("mode", choices=["coverage", "agent", "table"])
     ap.add_argument("--seeds", type=int, default=10)
     ap.add_argument("--registry", choices=["full", "connected"], default="full")
     ap.add_argument("--model", default="Qwen/Qwen2.5-7B-Instruct")
@@ -395,6 +447,8 @@ if __name__ == "__main__":
     t0 = time.time()
     if a.mode == "coverage":
         coverage(a.seeds, a.registry)
+    elif a.mode == "table":
+        table()
     else:
         agent(a.model, a.registry, a.k, a.passes, a.limit, a.only, a.seed)
     print(f"done in {time.time() - t0:.0f}s")
