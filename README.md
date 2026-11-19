@@ -37,7 +37,7 @@ the ToolRet experiment downloads `mangopy/ToolRet-Tools` and `mangopy/ToolRet-Qu
 
 ## Reproducing the paper
 
-Table numbers follow the revised manuscript (revision 1).
+Table numbers follow the revised manuscript (revision 1). The paper's ADAB operating point is γ = 2; the constructor default of `ADABEmaSelector` is γ = 3, and every reported run passes γ explicitly.
 
 | Paper element | Script | Output |
 |---|---|---|
